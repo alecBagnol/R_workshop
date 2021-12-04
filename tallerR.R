@@ -7,6 +7,9 @@ library(ggplot2)
 library(extrafont)
 library(modeest)
 
+loadfonts(device = "win")
+
+
 # Cargando la base de datos de peliculas
 peliculas <-read_xlsx("./PeliculasTallerR.xlsx")
 
@@ -46,7 +49,8 @@ pais_mas_peliculas <- peliculas %>%
   arrange(desc(Total))
   # slice(1)
 
-# 3. Para la variable calificación en Rotten Tomatoes
+#### 3. 
+# Para la variable calificación en Rotten Tomatoes
 rating_rotten_tomatoes <- peliculas %>%
   group_by(`Rotten Tomatoes`) %>%
   summarize(Total = n()) %>%
@@ -86,8 +90,7 @@ histograma2 <- ggplot(peliculas, aes(x=`Rotten Tomatoes`)) +
 
 
 
-# ____________________________________CODIGO JULIAN______________________________
-####Punto 4
+#### 4.
 colombia <- peliculas %>%
   filter(Country == "Colombia")
 
@@ -109,7 +112,7 @@ pie <- ggplot(genero, aes(x = "", y = Frec, fill = Genres)) +
   theme_void()
 
 
-####5punto
+#### 5.
 clasificacion_edad <- peliculas %>%
   filter(!is.na(Age)) %>%
   group_by(Age) %>%
@@ -124,10 +127,10 @@ boxplot_clasificacion_edad <- ggplot(clasificacion_edad_plot, aes(x= reorder(Age
   xlab("Clasificación de edad") +
   ylab ("Duración")
 
-# # ____________________________________CODIGO DANNA______________________________
-#
-loadfonts(device = "win")
-#6.a Diagrama de barras según genero de las películas producidas por estados unidos
+
+
+#### 6.
+# a. Diagrama de barras según genero de las películas producidas por estados unidos
 
 
 freq_pais <-as.data.frame(table(peliculas$Country))        # Frecuencia absoluta de películas por pais
@@ -148,7 +151,7 @@ Barras <- ggplot(Genero_peli, aes(x= reorder(Genres,-Frec) , y=Frec, fill= Genre
         axis.text.x = element_text(angle=90))
 
 
-#6.b Relación entre el género y la duración de las películas
+# b. Relación entre el género y la duración de las películas
 
 pelisin_Atip <- peliculas %>%
   # filter( Title!= "Colorado") %>%   ## Se elimina el dato porque posee una duración de 1440 min lo cual es un error
