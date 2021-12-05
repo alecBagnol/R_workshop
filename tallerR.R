@@ -49,7 +49,7 @@ pais_mas_peliculas <- peliculas %>%
   arrange(desc(Total))
   # slice(1)
 
-#### 3. 
+#### 3.
 # Para la variable calificación en Rotten Tomatoes
 rating_rotten_tomatoes <- peliculas %>%
   group_by(`Rotten Tomatoes`) %>%
@@ -86,8 +86,10 @@ nBins <- nclass.Sturges(peliculas$`Rotten Tomatoes`)
 colors <- c(rep("#7400b8",2), rep("#6930c3",2), rep("#5e60ce",2), rep("#5390d9",2), rep("#4ea8de",2), rep("#48bfe3",2), rep("#56cfe1",2), rep("#64dfdf",2))
 
 histograma2 <- ggplot(peliculas, aes(x=`Rotten Tomatoes`)) +
-  geom_histogram(fill = colors, bins = nBins)
-
+  geom_histogram(fill = colors, bins = nBins) +
+  theme_light(base_family = "serif") +
+  xlab("Rating Rotten Tomatoes") +
+  ylab ("Cantidad")
 
 
 #### 4.
@@ -101,15 +103,20 @@ genero <- colombia %>%
   mutate(totalfreq = Frec /  sum(Frec)) %>%
   mutate(totalfreq = scales::percent(totalfreq))
 
+colors_pie <- c(rep("#ffadad",1), rep("#ffd6a5",1), rep("#fdffb6",1), rep("#caffbf",1), rep("#9bf6ff",1), rep("#a0c4ff",1), rep("#bdb2ff",1))
+
 pie <- ggplot(genero, aes(x = "", y = Frec, fill = Genres)) +
   geom_col() +
-  geom_label(aes(label = totalfreq),
-             color = c("white", "white", "white", "white", 1, 1, 1),
+  geom_text(aes(label = totalfreq),
              position = position_stack(vjust = 0.5), show.legend = FALSE) +
-  guides(fill = guide_legend(title = "Generos")) +
-  scale_fill_viridis_d() +
+  guides(fill = guide_legend(title = "Genres",
+                             title.theme = element_text(size = 16, face = "bold", family = "serif"),
+                             label.theme = element_text(size = 14, family = "serif"))) +
+  scale_fill_manual(values = colors_pie) +
+  # scale_fill_viridis_d() +
   coord_polar(theta = "y") +
-  theme_void()
+  theme_void(base_family = "serif", base_size = 14)
+
 
 
 #### 5.
