@@ -113,7 +113,6 @@ pie <- ggplot(genero, aes(x = "", y = Frec, fill = Genres)) +
                              title.theme = element_text(size = 16, face = "bold", family = "serif"),
                              label.theme = element_text(size = 14, family = "serif"))) +
   scale_fill_manual(values = colors_pie) +
-  # scale_fill_viridis_d() +
   coord_polar(theta = "y") +
   theme_void(base_family = "serif", base_size = 14)
 
@@ -152,16 +151,15 @@ Barras <- ggplot(Genero_peli, aes(x= reorder(Genres,-Frec) , y=Frec, fill= Genre
   geom_bar(stat = "identity") +
   xlab("") +
   ylab("Frecuencia absoluta") +
-  ggtitle("Frecuecia de películas producidas por Estados unidos según el género") +
+  ggtitle("Frecuencia de películas producidas por Estados unidos según el género") +
   theme_light(base_family = "serif") +
-  theme(legend.position = "none", plot.title = element_text(hjust = 0.5, size=12),
+  theme(legend.position = "none", plot.title = element_text(hjust = 0.5, size=14),
         axis.text.x = element_text(angle=90))
 
 
 # b. Relación entre el género y la duración de las películas
 
 pelisin_Atip <- peliculas %>%
-  # filter( Title!= "Colorado") %>%   ## Se elimina el dato porque posee una duración de 1440 min lo cual es un error
   na.omit(Genres)
 
 Caja <- ggplot(pelisin_Atip, aes(x= reorder(Genres, Runtime), y= Runtime, fill= Genres)) +
